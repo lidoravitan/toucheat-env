@@ -1,0 +1,20 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./:/etc/nginx/conf.d/
+  api:
+    image: lidoravitan/toucheat-server
+    environment:
+      NODE_ENV: 'production'
+  app:
+    image: lidoravitan/toucheat-admin-fed
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/db:/data/db
