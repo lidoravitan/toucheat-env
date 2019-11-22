@@ -4,8 +4,10 @@ services:
     image: nginx:latest
     ports:
       - 80:80
+      - 443:443
     volumes:
-      - ./:/etc/nginx/conf.d/
+      - ./:/etc/nginx/conf.d
+      - ./certs:/var/www
   api:
     image: lidoravitan/toucheat-server
     environment:
