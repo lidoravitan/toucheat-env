@@ -7,7 +7,8 @@ services:
       - 443:443
     volumes:
       - ./:/etc/nginx/conf.d
-      - ./certs:/var/www
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
   api:
     image: lidoravitan/toucheat-server
     environment:
@@ -20,3 +21,8 @@ services:
       - 27017:27017
     volumes:
       - ./data/db:/data/db
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
