@@ -7,9 +7,10 @@ services:
       - 80:80
       - 443:443
     volumes:
+      - web-root:/var/www/html
       - ./nginx-create-ssl-conf:/etc/nginx/conf.d
-      - ./certbot-etc:/etc/letsencrypt
-      - ./certbot-var:/var/lib/letsencrypt
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     depends_on:
       - api
       - app
@@ -17,8 +18,9 @@ services:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - ./certbot-etc:/etc/letsencrypt
-      - ./certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     depends_on:
       - api
       - app
