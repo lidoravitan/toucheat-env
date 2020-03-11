@@ -24,7 +24,7 @@ services:
     depends_on:
       - api
       - app
-    command: certonly --force-renewal --webroot --webroot-path=/var/www/html/app -d toucheatapp.com  --webroot-path=/var/www/html/api -d api.toucheat.com --email tv.lidor@gmail.com --agree-tos --no-eff-email --staging --allow-subset-of-names
+    command: certonly --force-renewal --webroot --webroot-path=/var/www/html -d toucheatapp.com  --webroot-path=/var/www/html -d api.toucheat.com --email tv.lidor@gmail.com --agree-tos --no-eff-email --staging --allow-subset-of-names
   api:
     image: lidoravitan/toucheat-server
     environment:
