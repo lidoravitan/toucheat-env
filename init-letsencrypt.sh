@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(toucheatapp.com www.toucheatapp.com)
+domains=(toucheatapp.com www.toucheatapp.com api.toucheatapp.com www.api.toucheatapp.com)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="tv.lidor@gmail.com" # Adding a valid address is strongly recommended
