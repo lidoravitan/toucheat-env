@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   nginx:
     image: nginx:latest
@@ -7,13 +7,28 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./:/etc/nginx/conf.d
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - web-root:/var/www/html
+      - ./nginx-create-ssl-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - api
+      - app
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - api
+      - app
+    command: certonly --webroot --webroot-path=/var/www/html --email sammy@example.com --agree-tos --no-eff-email --staging -d example.com  -d www.example.com
   api:
     image: lidoravitan/toucheat-server
     environment:
-      NODE_ENV: 'production'
+      NODE_ENV: "production"
   app:
     image: lidoravitan/toucheat-admin-fed
   db:
@@ -22,9 +37,3 @@ services:
       - 27017:27017
     volumes:
       - ./data/db:/data/db
-  certbot:
-    image: certbot/certbot
-    restart: unless-stopped
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
