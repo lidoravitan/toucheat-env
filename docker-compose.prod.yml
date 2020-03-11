@@ -11,6 +11,9 @@ services:
       - web-root:/var/www/html
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - api
+      - app
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -18,7 +21,22 @@ services:
       - web-root:/var/www/html
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-    command: certonly --webroot --force-renewal --webroot-path=/var/www/html -d toucheatapp.com  --webroot-path=/var/www/html -d api.toucheatapp.com --email tv.lidor@gmail.com --agree-tos --no-eff-email --staging --allow-subset-of-names
+    depends_on:
+      - api
+      - app
+    command: renew --dry-run
+  api:
+    image: lidoravitan/toucheat-server
+    environment:
+      NODE_ENV: "production"
+  app:
+    image: lidoravitan/toucheat-admin-fed
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/db:/data/db
 volumes:
   certbot-etc:
   certbot-var:
