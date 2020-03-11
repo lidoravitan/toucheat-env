@@ -36,8 +36,6 @@ services:
     volumes:
       - ./data/db:/data/db
 
-  volumes:
-    certbot-etc:
-    certbot-var:
-    web-root:
-      driver: local
+volumes:
+  certbot-etc:
+  certbot-var:
