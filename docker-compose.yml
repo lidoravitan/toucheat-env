@@ -8,8 +8,8 @@ services:
       - 443:443
     volumes:
       - ./nginx-create-ssl-conf:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
+      - ./certbot-etc:/etc/letsencrypt
+      - ./certbot-var:/var/lib/letsencrypt
     depends_on:
       - api
       - app
@@ -17,8 +17,8 @@ services:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
+      - ./certbot-etc:/etc/letsencrypt
+      - ./certbot-var:/var/lib/letsencrypt
     depends_on:
       - api
       - app
@@ -35,6 +35,9 @@ services:
       - 27017:27017
     volumes:
       - ./data/db:/data/db
-  volumes: 
+
+  volumes:
     certbot-etc:
     certbot-var:
+    web-root:
+      driver: local
