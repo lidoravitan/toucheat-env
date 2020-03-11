@@ -24,19 +24,7 @@ services:
     depends_on:
       - api
       - app
-    command: renew --dry-run
-  api:
-    image: lidoravitan/toucheat-server
-    environment:
-      NODE_ENV: "production"
-  app:
-    image: lidoravitan/toucheat-admin-fed
-  db:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    volumes:
-      - ./data/db:/data/db
+    command: certonly --webroot --force-renewal --webroot-path=/var/www/html -d toucheatapp.com  --webroot-path=/var/www/html -d api.toucheatapp.com --email tv.lidor@gmail.com --agree-tos --no-eff-email --staging --allow-subset-of-names
 volumes:
   certbot-etc:
   certbot-var:
