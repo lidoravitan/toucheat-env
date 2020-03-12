@@ -2,6 +2,7 @@ version: "3"
 services:
   nginx:
     image: nginx:latest
+    container_name: nginx
     restart: unless-stopped
     ports:
       - 80:80
@@ -24,7 +25,6 @@ services:
     depends_on:
       - api
       - app
-    command: renew --dry-run
   api:
     image: lidoravitan/toucheat-server
     environment:
