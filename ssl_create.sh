@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.ssl up -d
+docker-compose -f docker-compose.ssl.yml up -d
